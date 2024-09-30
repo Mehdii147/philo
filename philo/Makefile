@@ -6,7 +6,7 @@
 #    By: ehafiane <ehafiane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/29 10:12:04 by ehafiane          #+#    #+#              #
-#    Updated: 2024/09/29 17:39:16 by ehafiane         ###   ########.fr        #
+#    Updated: 2024/09/30 19:20:10 by ehafiane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,3 +40,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
