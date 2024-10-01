@@ -6,13 +6,13 @@
 #    By: ehafiane <ehafiane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/29 10:12:04 by ehafiane          #+#    #+#              #
-#    Updated: 2024/09/30 19:20:10 by ehafiane         ###   ########.fr        #
+#    Updated: 2024/09/30 23:43:44 by ehafiane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -g #-Wall -Wextra -Werror
 RM = rm -f
 
 SRC = main_philo.c create_philo.c utils.c parsing.c
