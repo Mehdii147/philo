@@ -6,7 +6,7 @@
 /*   By: ehafiane <ehafiane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:11:47 by ehafiane          #+#    #+#             */
-/*   Updated: 2024/09/30 23:42:59 by ehafiane         ###   ########.fr       */
+/*   Updated: 2024/10/03 20:05:33 by ehafiane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_philo
 	int				id;
 	int				num_of_meals;
 	pthread_mutex_t	forks;
+	pthread_mutex_t	*print;
+	pthread_mutex_t	eat;
 	pthread_t		philo;
 	t_table			*table;
 	struct s_philo	*next;
@@ -47,7 +49,7 @@ typedef struct s_philo
 //main functions
 void			*routine(void *philo);
 size_t			get_current_time(void);
-int				ft_usleep(size_t milliseconds);
+void				ft_msleep(size_t milliseconds);
 void			init_content(t_table *table, char **av, int ac);
 void			ft_lstaddback(t_philo **philo, t_philo *new);
 t_philo			*ft_lstnew(t_table *philo, int id);
@@ -62,5 +64,8 @@ int				check_over_flow(char **av);
 //utils.c
 long long int	ft_atoll(char *str);
 int				ft_atoi(char *str);
+
+
+
 
 #endif
