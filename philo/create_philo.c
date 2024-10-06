@@ -6,7 +6,7 @@
 /*   By: ehafiane <ehafiane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:11:44 by ehafiane          #+#    #+#             */
-/*   Updated: 2024/10/03 18:19:59 by ehafiane         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:23:53 by ehafiane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void	create_philo_thread(t_table *table, t_philo *philo)
 	print = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(print, NULL);
 	philo->table->time_start = get_current_time();
-	
 	while (i < table->nb_philos)
 	{
 		philo->print = print;
 		philo->last_meal_time = get_current_time();
 		pthread_mutex_init(&philo->forks, NULL);
 		pthread_mutex_init(&philo->eat, NULL);
+		pthread_mutex_init(&philo->dead, NULL);
 		i++;
 		philo = philo->next;
 	}

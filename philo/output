@@ -7,74 +7,74 @@
 202 3	is sleeping
 202 4	has taken a fork
 203 1	is sleeping
-203 2	has taken a fork
-203 2	has taken a fork
-203 2	is eating
 203 4	has taken a fork
+203 2	has taken a fork
+203 2	has taken a fork
 203 4	is eating
+203 2	is eating
 402 3	is thinking
-403 1	is thinking
 403 4	is sleeping
 403 2	is sleeping
-403 1	has taken a fork
-403 1	has taken a fork
 403 3	has taken a fork
 403 3	has taken a fork
 403 3	is eating
+403 1	is thinking
+403 1	has taken a fork
+403 1	has taken a fork
 403 1	is eating
+603 1	is sleeping
 603 4	is thinking
+603 3	is sleeping
+603 4	has taken a fork
+603 4	has taken a fork
 603 2	is thinking
 603 2	has taken a fork
 603 2	has taken a fork
-603 2	is eating
-603 4	has taken a fork
-603 4	has taken a fork
-603 3	is sleeping
-603 1	is sleeping
 603 4	is eating
-803 3	is thinking
+603 2	is eating
 803 4	is sleeping
+803 3	is thinking
 803 2	is sleeping
+803 3	has taken a fork
+803 3	has taken a fork
+803 3	is eating
 803 1	is thinking
 803 1	has taken a fork
 803 1	has taken a fork
 803 1	is eating
-803 3	has taken a fork
-803 3	has taken a fork
-803 3	is eating
-1003 4	is thinking
 1003 2	is thinking
+1003 2	has taken a fork
+1003 2	has taken a fork
+1003 2	is eating
 1003 1	is sleeping
 1003 3	is sleeping
-1003 2	has taken a fork
-1003 2	has taken a fork
+1003 4	is thinking
 1003 4	has taken a fork
 1003 4	has taken a fork
-1003 2	is eating
 1003 4	is eating
 1203 1	is thinking
 1203 3	is thinking
-1203 2	is sleeping
 1203 4	is sleeping
+1203 2	is sleeping
 1203 3	has taken a fork
 1203 3	has taken a fork
 1203 1	has taken a fork
 1203 1	has taken a fork
-1203 1	is eating
 1203 3	is eating
-1403 2	is thinking
-1403 3	is sleeping
+1203 1	is eating
 1403 4	is thinking
+1403 3	is sleeping
+1403 1	is sleeping
 1403 4	has taken a fork
+1403 4	has taken a fork
+1403 2	is thinking
+1403 4	is eating
 1403 2	has taken a fork
 1403 2	has taken a fork
 1403 2	is eating
-1403 1	is sleeping
-1403 4	has taken a fork
-1403 4	is eating
-1727984969844 3	is thinking
-1727984969844 1	is thinking
-1727984969844 2	is sleeping
-1727984969844 4	is sleeping
-1727984969844 4	is thinking
-1727984969844 2	is thinking
+1727985195295 4	is sleeping
+1727985195295 4	is thinking
+1727985195295 1	is thinking
+1727985195295 3	is thinking
+1727985195295 2	is sleeping
+1727985195295 2	is thinking

@@ -6,7 +6,7 @@
 /*   By: ehafiane <ehafiane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:11:47 by ehafiane          #+#    #+#             */
-/*   Updated: 2024/10/03 20:05:33 by ehafiane         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:29:03 by ehafiane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_of_meals;
-	size_t			time_start;
+	unsigned long long			time_start;
 	int				dead;
 	int				full;
 	struct s_philo	*philo;
@@ -41,6 +41,7 @@ typedef struct s_philo
 	pthread_mutex_t	forks;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	eat;
+	pthread_mutex_t	dead;
 	pthread_t		philo;
 	t_table			*table;
 	struct s_philo	*next;

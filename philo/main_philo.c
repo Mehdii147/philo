@@ -6,7 +6,7 @@
 /*   By: ehafiane <ehafiane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 10:11:42 by ehafiane          #+#    #+#             */
-/*   Updated: 2024/10/03 20:50:34 by ehafiane         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:25:17 by ehafiane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,30 @@ void	init_content(t_table *table, char **av, int ac)
 void	print(char *msg, t_philo *philo)
 {
 	pthread_mutex_lock(philo->print);
-	printf("%lu %d	%s\n", get_current_time() - philo->table->time_start, philo->id, msg);
+    // printf("tiemstart %llu\n", philo->table->time_start);
+	printf("%llu %d	%s\n", get_current_time() - philo->table->time_start, philo->id, msg);
+    pthread_mutex_lock(&philo->dead);
 	if (philo->table->dead == 1)
-	{
+    {
+        pthread_mutex_unlock(&philo->dead);
+	    pthread_mutex_unlock(philo->print);
 		return ;
-	}
+    }
+    pthread_mutex_unlock(&philo->dead);
 	pthread_mutex_unlock(philo->print);
 }
 
+int    isDead(t_philo *philo)
+{
+    pthread_mutex_lock(&philo->dead);
+    if (philo->table->dead == 1)
+    {
+        pthread_mutex_unlock(&philo->dead);
+        return 1;
+    }
+    pthread_mutex_unlock(&philo->dead);
+    return 0;
+}
 
 void *routine(void *philo)
 {
@@ -70,14 +86,13 @@ void *routine(void *philo)
         print("is sleeping", ph);
         ft_msleep(ph->table->time_to_sleep);
         print("is thinking", ph);
-        pthread_mutex_lock(ph->print);
-		
-        if (ph->table->dead || (ph->table->num_of_meals > 0 && ph->num_of_meals >= ph->table->num_of_meals))
+        pthread_mutex_lock(&ph->eat);
+        if (isDead(ph) || (ph->table->num_of_meals > 0 && ph->num_of_meals >= ph->table->num_of_meals))
         {
-            pthread_mutex_unlock(ph->print);
+            pthread_mutex_unlock(&ph->eat);
             break;
         }
-        pthread_mutex_unlock(ph->print);
+        pthread_mutex_unlock(&ph->eat);
     }
     return NULL;
 }
@@ -105,6 +120,7 @@ int	check_eating(t_philo *philo)
 }
 
 
+
 void check_if_died(t_philo *philo_ptr)
 {
     t_philo *philo = philo_ptr;
@@ -119,11 +135,11 @@ void check_if_died(t_philo *philo_ptr)
             pthread_mutex_lock(&philo->eat);
             if ((get_current_time() - philo->last_meal_time) >= philo->table->time_to_die)
             {
-                print("died", philo);
-                pthread_mutex_lock(philo->print);
-                philo->table->dead = 1;
-                pthread_mutex_unlock(philo->print);
                 pthread_mutex_unlock(&philo->eat);
+                pthread_mutex_lock(&philo->dead);
+                philo->table->dead = 1;
+                pthread_mutex_unlock(&philo->dead);
+                print("died", philo);
                 return;
             }
             if (philo->table->num_of_meals > 0 && philo->num_of_meals < philo->table->num_of_meals)
@@ -134,9 +150,9 @@ void check_if_died(t_philo *philo_ptr)
         }
         if (all_ate && philo->table->num_of_meals > 0)
         {
-            pthread_mutex_lock(philo->print);
+            pthread_mutex_lock(&philo->dead);
             philo->table->dead = 1; 
-            pthread_mutex_unlock(philo->print);
+            pthread_mutex_unlock(&philo->dead);
             return;
         }
     }
