@@ -5,97 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehafiane <ehafiane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/29 12:41:43 by ehafiane          #+#    #+#             */
-/*   Updated: 2024/10/03 16:30:56 by ehafiane         ###   ########.fr       */
+/*   Created: 2024/10/06 19:57:32 by ehafiane          #+#    #+#             */
+/*   Updated: 2024/10/06 22:19:20 by ehafiane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_msleep(size_t milliseconds)
+size_t	get_current_time(void)
 {
-	size_t	start;
+	struct timeval	time;
 
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
-		usleep(100);
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-int	result(char *s, int i, int sign)
+size_t	current_var(size_t var)
 {
-	long long	r;
+	size_t	time;
 
-	r = 0;
-	while (s[i] >= '0' && s[i] <= '9')
-	{
-		if (r > INT_MAX)
-		{
-			if (sign == -1)
-				return (0);
-			return (-1);
-		}
-		r = r * 10 + (s[i] - '0');
-		i++;
-	}
-	return (r);
+	time = get_current_time();
+	return (time - var);
 }
 
-int	ft_atoi(char *str)
+void	init_content(t_philo *philo, int ac, char **av)
 {
-	int					i;
-	long long			r;
-	int					s;
+	philo->nb_philo = ft_atoi(av[1]);
+	philo->time_to_die = ft_atoi(av[2]);
+	philo->time_to_eat = ft_atoi(av[3]);
+	philo->time_to_sleep = ft_atoi(av[4]);
+	philo->num_meals = 0;
+	philo->last_meal = 0;
+	philo->max_nb_meals = 0;
+	if (ac == 6)
+		philo->max_nb_meals = ft_atoi(av[5]);
+	philo->next = NULL;
+}
+
+void	fill_nodes(t_philo **philo, int nb_philos, int ac, char **av)
+{
+	t_philo	*tmp;
+	int		i;
 
 	i = 0;
-	s = 1;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	while (i < nb_philos)
 	{
-		if (str[i] == '-')
-			s *= -1;
+		ft_lstadd_back((philo), ft_lstnew(ac, av));
+		ft_lstlast(*philo)->id = i + 1;
 		i++;
 	}
-	r = result(str, i, s);
-	return (r * s);
-}
-
-long long	ll_result(char *s, int i, int sign)
-{
-	long long	r;
-
-	r = 0;
-	while (s[i] >= '0' && s[i] <= '9')
-	{
-		if (r > LONG_MAX / 10
-			|| (r == LONG_MAX / 10 && (s[i] - '0') > LONG_MAX % 10))
-		{
-			if (sign == -1)
-				return (LLONG_MIN);
-			return (LLONG_MAX);
-		}
-		r = r * 10 + (s[i] - '0');
-		i++;
-	}
-	return (r);
-}
-
-long long	ft_atoll(char *str)
-{
-	int			i;
-	long long	r;
-	int			s;
-
-	i = 0;
-	s = 1;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			s = -1;
-		i++;
-	}
-	r = ll_result(str, i, s);
-	return (r * s);
 }

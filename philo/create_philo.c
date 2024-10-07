@@ -5,94 +5,58 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehafiane <ehafiane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/29 10:11:44 by ehafiane          #+#    #+#             */
-/*   Updated: 2024/10/06 15:23:53 by ehafiane         ###   ########.fr       */
+/*   Created: 2024/10/06 19:57:38 by ehafiane          #+#    #+#             */
+/*   Updated: 2024/10/06 20:12:20 by ehafiane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-size_t	get_current_time(void)
+t_philo	*ft_lstlast(t_philo *lst)
 {
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) == -1)
-		write(2, "gettimeofday() error\n", 22);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
 
-void	ft_lstaddback(t_philo **philo, t_philo *new)
+void	ft_lstadd_front(t_philo **lst, t_philo *new)
+{
+	if (!lst || !new)
+		return ;
+	new->next = *lst;
+	*lst = new;
+}
+
+void	ft_lstadd_back(t_philo **lst, t_philo *new)
 {
 	t_philo	*tmp;
 
-	if (!*philo)
+	if (!lst || !new)
+		return ;
+	tmp = *lst;
+	if (!tmp)
 	{
-		*philo = new;
+		new->next = *lst;
+		*lst = new;
 		return ;
 	}
-	tmp = *philo;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
 }
 
-t_philo	*ft_lstnew(t_table *table, int id)
+t_philo	*ft_lstnew(int ac, char **av)
 {
 	t_philo	*philo;
 
 	philo = malloc(sizeof(t_philo));
 	if (!philo)
 		return (NULL);
-	philo->num_of_meals = 0;
-	philo->id = id + 1;
-	philo->last_meal_time = get_current_time();
-	philo->table = table;
-	philo->next = NULL;
+	init_content(philo, ac, av);
+	if (philo->nb_philo < 1 || philo->time_to_die < 0 || philo->time_to_eat < 0
+		|| philo->time_to_sleep < 0 || philo->max_nb_meals < 0)
+		return (NULL);
 	return (philo);
-}
-
-void	create_philo_node(t_table *table, t_philo **philo)
-{
-	int		i;
-	t_philo	*ph;
-
-	i = 0;
-	*philo = NULL;
-	while (i < table->nb_philos)
-	{
-		ph = ft_lstnew(table, i);
-		ft_lstaddback(philo, ph);
-		i++;
-	}
-	ph->next = *philo;
-}
-
-void	create_philo_thread(t_table *table, t_philo *philo)
-{
-	int	i;
-	pthread_mutex_t		*print;
-
-	i = 0;
-	print = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(print, NULL);
-	philo->table->time_start = get_current_time();
-	while (i < table->nb_philos)
-	{
-		philo->print = print;
-		philo->last_meal_time = get_current_time();
-		pthread_mutex_init(&philo->forks, NULL);
-		pthread_mutex_init(&philo->eat, NULL);
-		pthread_mutex_init(&philo->dead, NULL);
-		i++;
-		philo = philo->next;
-	}
-	i = 0;
-	philo = philo->next;
-	while (i < table->nb_philos)
-	{
-		pthread_create(&philo->philo, NULL, &routine, philo);
-		pthread_detach(philo->philo);
-		philo = philo->next;
-		i++;
-	}
 }
